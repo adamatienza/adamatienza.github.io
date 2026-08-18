@@ -29,6 +29,9 @@ link in `index.html` keeps working.
 
 ## Before publishing
 
+- [ ] Replace `REPLACE-WITH-YOUR-DOMAIN` in the `og:url` and `og:image` tags —
+      link previews stay blank until these are absolute URLs
+- [ ] Add repository links to the project cards (or state that a repo is private)
 - [ ] Add "VS Code" to the resume's Tools line — the site lists both VS Code and
       Visual Studio, the resume currently lists only Visual Studio
 - [ ] Swap the accent color if desired — change `--accent`, `--accent-dim`,

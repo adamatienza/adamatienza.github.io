@@ -1,0 +1,16 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / tooling
+.vscode/
+.idea/
+*.swp
+
+# Local agent settings (keep shared config, ignore per-machine overrides)
+.claude/settings.local.json
+
+# Scratch files
+_shot.*
+*.tmp

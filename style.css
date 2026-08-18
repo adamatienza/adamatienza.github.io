@@ -15,7 +15,9 @@
   /* Text */
   --text:          #e6eaf2;
   --text-muted:    #98a2b8;
-  --text-dim:      #6b7689;
+  /* #798497 rather than a darker grey so small mono labels clear WCAG AA
+     (4.5:1) on every surface token above. Do not darken without re-checking. */
+  --text-dim:      #798497;
 
   /* Accent */
   --accent:        #5eead4;
@@ -35,6 +37,12 @@
 
   --header-h: 64px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Width at which the nav switches to the mobile overlay. script.js reads this
+     token so the breakpoint is declared once. Media queries can't consume custom
+     properties, so the `@media (max-width: 767px)` block below must be updated
+     alongside it — those two are the only places this number appears. */
+  --nav-breakpoint: 768px;
 }
 
 /* ---------- Reset ---------- */
@@ -767,13 +775,10 @@ strong {
   transform: none;
 }
 
-/* Stagger children within a grid */
-.project-grid .reveal:nth-child(2),
-.skills-grid .reveal:nth-child(2) { transition-delay: 0.08s; }
-.project-grid .reveal:nth-child(3),
-.skills-grid .reveal:nth-child(3) { transition-delay: 0.16s; }
-.project-grid .reveal:nth-child(4),
-.skills-grid .reveal:nth-child(4) { transition-delay: 0.24s; }
+/* Stagger children within a grid. Each card carries its own --i, so adding
+   items needs no new CSS — set --i on the new card and it falls into step. */
+.project-grid .reveal,
+.skills-grid .reveal { transition-delay: calc(var(--i, 0) * 0.08s); }
 
 /* ==========================================================================
    Responsive

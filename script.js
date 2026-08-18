@@ -8,6 +8,17 @@
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Layout constants are declared in style.css so there is a single source of
+  // truth. Read them once here rather than repeating the numbers.
+  function cssNumber(name, fallback) {
+    var raw = getComputedStyle(document.documentElement).getPropertyValue(name);
+    var n = parseInt(raw, 10);
+    return isNaN(n) ? fallback : n;
+  }
+
+  var headerH = cssNumber('--header-h', 64);
+  var navBreakpoint = cssNumber('--nav-breakpoint', 768);
+
   /* ----------------------------------------------------------------------
      Footer year
      ---------------------------------------------------------------------- */
@@ -23,11 +34,28 @@
   var nav = document.getElementById('primary-nav');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
 
+  // Everything the overlay covers. While it is up these are marked inert so
+  // keyboard focus can't wander into links hidden behind it.
+  var coveredRegions = [
+    document.getElementById('main'),
+    document.querySelector('.site-footer'),
+    document.querySelector('.brand')
+  ];
+
   function setNav(open) {
     if (!nav || !navToggle) return;
     nav.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', String(open));
     document.body.classList.toggle('nav-open', open);
+
+    coveredRegions.forEach(function (region) {
+      if (!region) return;
+      if (open) {
+        region.setAttribute('inert', '');
+      } else {
+        region.removeAttribute('inert');
+      }
+    });
   }
 
   function closeNav() {
@@ -50,7 +78,7 @@
     });
 
     // Leaving the mobile breakpoint should never strand an open overlay.
-    var desktop = window.matchMedia('(min-width: 768px)');
+    var desktop = window.matchMedia('(min-width: ' + navBreakpoint + 'px)');
     var onBreakpointChange = function (e) {
       if (e.matches) closeNav();
     };
@@ -112,6 +140,12 @@
       navLinks.forEach(function (link) {
         var isActive = Boolean(best) && link.getAttribute('href') === '#' + best.id;
         link.classList.toggle('is-active', isActive);
+        // Expose the same state to assistive tech, not just to the eye.
+        if (isActive) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
       });
     };
 
@@ -127,7 +161,7 @@
     }, {
       // Offset the fixed header so a section counts as "current"
       // only once it sits under the nav bar.
-      rootMargin: '-72px 0px -55% 0px',
+      rootMargin: '-' + (headerH + 8) + 'px 0px -55% 0px',
       threshold: 0
     });
 
@@ -166,12 +200,15 @@
      Smooth scroll fallback for browsers without CSS scroll-behavior
      ---------------------------------------------------------------------- */
   if (!('scrollBehavior' in document.documentElement.style)) {
-    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    // slice.call, not NodeList.forEach — the browsers that land in this branch
+    // are old enough to lack the latter, which would throw exactly here.
+    var anchors = Array.prototype.slice.call(document.querySelectorAll('a[href^="#"]'));
+    anchors.forEach(function (link) {
       link.addEventListener('click', function (e) {
         var target = document.querySelector(link.getAttribute('href'));
         if (!target) return;
         e.preventDefault();
-        var top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - (headerH + 16);
         window.scrollTo(0, top);
       });
     });

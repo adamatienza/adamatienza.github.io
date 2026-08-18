@@ -74,17 +74,19 @@ skip that.
 `.nav-link` href and observes the matching element. A new section needs both an
 `id` and a nav link pointing at it, or it will never highlight.
 
-**Two hardcoded sync points — update both sides together:**
+**Layout constants come from CSS tokens.** `script.js` reads `--header-h` and
+`--nav-breakpoint` via `cssNumber()` at startup and derives the scrollspy
+`rootMargin` and the anchor-scroll offset from them. Change the token, not the
+JS. The one place this can still drift is the `@media (max-width: 767px)` block
+— media queries can't consume custom properties, so that literal must be kept
+one below `--nav-breakpoint` by hand.
 
-1. Mobile nav breakpoint appears as `@media (max-width: 767px)` in `style.css`
-   and `matchMedia('(min-width: 768px)')` in `script.js`. If these drift, the
-   overlay can get stranded open when resizing across the boundary.
-2. Header height is `--header-h` (64px) driving `scroll-padding-top` in CSS, but
-   the scrollspy `rootMargin` in `script.js` hardcodes `-72px` to approximate it.
+**Stagger delays read `--i` from each card.** `.project-grid` and `.skills-grid`
+children compute `transition-delay: calc(var(--i, 0) * 0.08s)`. A new card needs
+`style="--i: N"` on it; without one it defaults to 0 and reveals immediately.
 
-**Stagger delays are nth-child based.** `.project-grid` and `.skills-grid`
-children get transition delays via `:nth-child(2|3|4)`, hardcoded through four
-items. A fifth card renders with no delay until CSS is extended.
+**Adding a project card** means: `--i` for the stagger, plus `reveal` for the
+entrance animation. Both are inline on the existing four — copy one.
 
 ## Content rules
 
@@ -107,3 +109,18 @@ one to match.
 
 Prose in the hero intro and the third About paragraph was drafted by Claude, not
 the owner, and may be rewritten in his voice at any time.
+
+**The hero badge reads "Available for new opportunities."** It is accurate as of
+August 2026. It becomes actively misleading the moment that changes, so check it
+whenever the site is touched — nobody thinks to edit it otherwise.
+
+**The project cards have no repository links.** This is a known gap, not an
+oversight to fill in: the owner has not said which projects have public repos.
+Don't invent URLs.
+
+## Deploying
+
+`og:url` and `og:image` in `index.html` carry a `REPLACE-WITH-YOUR-DOMAIN`
+placeholder. Social scrapers ignore relative paths, so both must become absolute
+URLs before the site is shared, or link previews stay blank. `assets/og-preview.png`
+is the 1200×630 card image they point at.
