@@ -5,25 +5,43 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  /* Surfaces */
-  --bg:            #0b0e14;
-  --bg-elev:       #11151f;
-  --bg-elev-2:     #161b27;
-  --border:        #212836;
-  --border-strong: #2d3648;
+  /* Surfaces — warm cream, the lit wall rather than the dark room. Cards sit
+     *lighter* than the page so they read as catching more light, which is how
+     the reference rooms actually behave. */
+  --bg:            #f6efe4;
+  --bg-elev:       #fffbf4;
+  --bg-elev-2:     #ffffff;
+  --border:        #e5d6c2;
+  --border-strong: #d2bda2;
 
-  /* Text */
-  --text:          #e6eaf2;
-  --text-muted:    #98a2b8;
-  /* #798497 rather than a darker grey so small mono labels clear WCAG AA
-     (4.5:1) on every surface token above. Do not darken without re-checking. */
-  --text-dim:      #798497;
+  /* Same as --bg in channels, for compositing translucent overlays without
+     restating the literal. Used by the header, nav overlay, photo scrims. */
+  --bg-rgb:        246 239 228;
 
-  /* Accent */
-  --accent:        #5eead4;
-  --accent-dim:    #2dd4bf;
-  --accent-soft:   rgba(94, 234, 212, 0.12);
-  --accent-line:   rgba(94, 234, 212, 0.28);
+  /* Text — warm darks, never pure black. Pure black on cream reads harsh and
+     cold; a brown-black sits in the same light as everything else. */
+  --text:          #2b1e13;
+  --text-muted:    #63513f;
+  --text-dim:      #7d6852;
+
+  /* Accent — deep teal. Still the *instrument* (scope trace, active nav, icon
+     tiles, primary button) and still the cool complement to the amber ambient,
+     but dark enough to hold contrast on cream. */
+  --accent:        #0d6962;
+  --accent-dim:    #0a544e;
+  --accent-rgb:    13 105 98;
+  --accent-soft:   rgb(13 105 98 / 0.09);
+  --accent-line:   rgb(13 105 98 / 0.26);
+
+  /* Ambient — warm lamp light pooling on the wall. On a cream ground this
+     reads as sunlight rather than a glow in the dark, and it *darkens* the
+     surface slightly, so it works with the dark text instead of against it. */
+  --amber-rgb:     255 138 43;
+
+  /* Depth. On cream, surfaces separate by shadow rather than by being lighter
+     than the page, so cards need these to sit above the ground at all. */
+  --shadow:        0 1px 2px rgb(43 30 19 / 0.04), 0 3px 10px rgb(43 30 19 / 0.05);
+  --shadow-lift:   0 2px 4px rgb(43 30 19 / 0.05), 0 10px 28px rgb(43 30 19 / 0.09);
 
   /* Type */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -54,11 +72,14 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 16px);
   -webkit-text-size-adjust: 100%;
+  /* Ground lives on the root so .ambient can sit above it at z-index -1
+     without fighting the body's own background box. */
+  background-color: var(--bg);
 }
 
 body {
   margin: 0;
-  background-color: var(--bg);
+  background-color: transparent;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -134,6 +155,27 @@ strong {
 }
 
 /* ==========================================================================
+   Ambient light
+
+   Three warm sources washing the dark ground, positioned mostly off-canvas
+   so only the falloff shows — that's what makes light read as spilling
+   across a surface rather than sitting on top of it.
+   ========================================================================== */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    /* floor lamp, lower left */
+    radial-gradient(115% 80% at 2% 106%,  rgb(var(--amber-rgb) / 0.34), transparent 62%),
+    /* wall wash, upper right */
+    radial-gradient(88% 64% at 104% 4%,   rgb(var(--amber-rgb) / 0.26), transparent 64%),
+    /* bounce off the ceiling */
+    radial-gradient(68% 50% at 46% -10%,  rgb(var(--amber-rgb) / 0.17), transparent 68%);
+}
+
+/* ==========================================================================
    Header / Nav
    ========================================================================== */
 .site-header {
@@ -150,7 +192,7 @@ strong {
 }
 
 .site-header.is-scrolled {
-  background-color: rgba(11, 14, 20, 0.82);
+  background-color: rgb(var(--bg-rgb) / 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom-color: var(--border);
@@ -283,7 +325,7 @@ strong {
 
 .btn-primary {
   background: var(--accent);
-  color: #06231f;
+  color: #f4fbfa;
   font-weight: 600;
 }
 .btn-primary:hover { background: var(--accent-dim); }
@@ -318,9 +360,11 @@ strong {
   width: min(900px, 120vw);
   aspect-ratio: 1;
   transform: translateX(-50%);
+  /* The hero's own lamp — warm, so the teal scope trace reads as the one
+     cool light source in the room. */
   background: radial-gradient(circle at center,
-              rgba(94, 234, 212, 0.10) 0%,
-              rgba(94, 234, 212, 0.04) 35%,
+              rgb(var(--amber-rgb) / 0.27) 0%,
+              rgb(var(--amber-rgb) / 0.12) 34%,
               transparent 68%);
   pointer-events: none;
 }
@@ -355,10 +399,17 @@ strong {
   margin-bottom: 1.75rem;
 }
 
+/* Sits on its own opaque surface rather than bare ground: it lands right in
+   the hero lamp, and small dim text over live glow is the one contrast case
+   this palette can't win. Giving it a chip frees the ambient to go brighter. */
 .hero-location {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-elev);
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--text-dim);
@@ -395,9 +446,9 @@ strong {
 }
 
 @keyframes pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0); }
+  0%   { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgb(var(--accent-rgb) / 0); }
+  100% { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0); }
 }
 
 .hero-title {
@@ -518,6 +569,7 @@ strong {
 .fact-list {
   margin: 2.5rem 0 0;
   display: grid;
+  box-shadow: var(--shadow);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
@@ -561,6 +613,7 @@ strong {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--bg-elev);
+  box-shadow: var(--shadow);
 }
 
 .portrait img {
@@ -588,7 +641,9 @@ strong {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+  box-shadow: var(--shadow);
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease),
+              box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
 .project::before {
@@ -605,6 +660,8 @@ strong {
 .project:hover {
   border-color: var(--border-strong);
   background: var(--bg-elev-2);
+  box-shadow: var(--shadow-lift);
+  transform: translateY(-2px);
 }
 
 .project:hover::before { opacity: 1; }
@@ -622,12 +679,13 @@ strong {
   object-fit: cover;
 }
 
-/* Settle the photo into the dark palette instead of letting it glare. */
+/* A hairline inset instead of a scrim — on a light ground a dark gradient
+   over a photo reads as a vignette, not as the photo sitting in the page. */
 .project-media::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(11, 14, 20, 0.5), rgba(11, 14, 20, 0) 55%);
+  box-shadow: inset 0 0 0 1px rgb(43 30 19 / 0.08);
   pointer-events: none;
 }
 
@@ -700,7 +758,7 @@ strong {
 .tag {
   padding: 0.28rem 0.6rem;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgb(43 30 19 / 0.035);
   border: 1px solid var(--border);
   font-family: var(--font-mono);
   font-size: 0.73rem;
@@ -718,6 +776,7 @@ strong {
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
   transition: border-color 0.3s var(--ease);
 }
 
@@ -789,14 +848,16 @@ strong {
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow);
   transition: transform 0.2s var(--ease), border-color 0.2s var(--ease),
-              background-color 0.2s var(--ease);
+              background-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .contact-card:hover {
   transform: translateY(-2px);
   border-color: var(--accent-line);
   background: var(--bg-elev-2);
+  box-shadow: var(--shadow-lift);
 }
 
 .contact-icon {
@@ -835,9 +896,12 @@ strong {
 /* ==========================================================================
    Footer
    ========================================================================== */
+/* Opaque band. The footer sits in the floor lamp's brightest pool, so giving
+   it a surface keeps its dim text off live glow. */
 .site-footer {
   border-top: 1px solid var(--border);
   padding: 2rem 0;
+  background: var(--bg-elev);
 }
 
 .footer-inner {
@@ -910,7 +974,7 @@ strong {
     inset: 0;
     display: grid;
     place-items: center;
-    background: rgba(11, 14, 20, 0.96);
+    background: rgb(var(--bg-rgb) / 0.96);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     opacity: 0;

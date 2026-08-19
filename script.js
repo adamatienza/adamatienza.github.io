@@ -10,9 +10,13 @@
 
   // Layout constants are declared in style.css so there is a single source of
   // truth. Read them once here rather than repeating the numbers.
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(name).trim();
+  }
+
   function cssNumber(name, fallback) {
-    var raw = getComputedStyle(document.documentElement).getPropertyValue(name);
-    var n = parseInt(raw, 10);
+    var n = parseInt(cssVar(name), 10);
     return isNaN(n) ? fallback : n;
   }
 
@@ -212,6 +216,14 @@
     var cssW = 0;
     var cssH = 0;
 
+    // Trace colour comes from the palette, so retuning --accent-rgb in the
+    // stylesheet moves the scope with everything else.
+    var accentParts = (cssVar('--accent-rgb') || '15 118 110').split(/[\s,]+/);
+    function accent(alpha) {
+      return 'rgba(' + accentParts[0] + ',' + accentParts[1] + ',' +
+             accentParts[2] + ',' + alpha + ')';
+    }
+
     function sizeScope() {
       var rect = scope.getBoundingClientRect();
       cssW = rect.width;
@@ -261,7 +273,7 @@
     function drawGrid() {
       var step = 44;
       ctx.lineWidth = 1;
-      ctx.strokeStyle = 'rgba(94, 234, 212, 0.055)';
+      ctx.strokeStyle = accent(0.10);
       ctx.beginPath();
       for (var x = step; x < cssW; x += step) {
         ctx.moveTo(Math.round(x) + 0.5, 0);
@@ -274,7 +286,7 @@
       ctx.stroke();
 
       // Centre line, a touch brighter — the zero volt reference.
-      ctx.strokeStyle = 'rgba(94, 234, 212, 0.13)';
+      ctx.strokeStyle = accent(0.2);
       ctx.beginPath();
       ctx.moveTo(0, Math.round(cssH / 2) + 0.5);
       ctx.lineTo(cssW, Math.round(cssH / 2) + 0.5);
@@ -295,7 +307,7 @@
       // The persistent trace.
       ctx.lineWidth = 2;
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = 'rgba(94, 234, 212, 0.42)';
+      ctx.strokeStyle = accent(0.4);
       ctx.beginPath();
       for (var x = 0; x <= cssW; x += step) {
         var y = mid - sampleAt(x / cssW, t, now) * amp;
@@ -310,9 +322,9 @@
       var from = Math.max(0, headX - tail);
 
       ctx.save();
-      ctx.shadowColor = 'rgba(94, 234, 212, 0.85)';
-      ctx.shadowBlur = 12;
-      ctx.strokeStyle = 'rgba(160, 255, 238, 0.95)';
+      ctx.shadowColor = accent(0.4);
+      ctx.shadowBlur = 9;
+      ctx.strokeStyle = accent(0.95);
       ctx.lineWidth = 2.2;
       ctx.beginPath();
       for (var bx = from; bx <= headX; bx += step) {
@@ -324,7 +336,7 @@
 
       // Beam head.
       var hy = mid - sampleAt(headX / cssW, t, now) * amp;
-      ctx.fillStyle = '#d6fff5';
+      ctx.fillStyle = accent(1);
       ctx.beginPath();
       ctx.arc(headX, hy, 2.6, 0, Math.PI * 2);
       ctx.fill();
