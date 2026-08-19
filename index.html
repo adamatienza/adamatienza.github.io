@@ -246,7 +246,42 @@
             </div>
           </article>
 
-          <article class="project reveal" style="--i: 2">
+          <article class="project has-media reveal" style="--i: 2">
+            <div class="project-media">
+              <img src="assets/key-to-escape.png" width="1710" height="1005"
+                   loading="lazy" decoding="async"
+                   alt="Gameplay from Key to Escape: a top-down pixel-art office interior with the player character pursued by two enemy creatures, and a health bar across the top of the screen." />
+            </div>
+
+            <div class="project-body">
+              <div class="card-top">
+                <span class="card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="7" width="20" height="11" rx="4" />
+                    <path d="M7 11v3M5.5 12.5h3" />
+                    <circle cx="16" cy="12" r="1" />
+                    <circle cx="18.5" cy="14.5" r="1" />
+                  </svg>
+                </span>
+                <span class="badge">Team Project</span>
+              </div>
+              <h3 class="card-title">Key to Escape</h3>
+              <p class="card-desc">
+                A Unity game built by a four-person Scrum team across a ten-week agile
+                cycle, version-controlled in Git through the full design–build–deploy
+                lifecycle. I built and debugged the interactive enemy character system —
+                the creatures pictured — reworking its behavior from play-tester
+                feedback and code review.
+              </p>
+              <ul class="tag-list">
+                <li class="tag">Unity</li>
+                <li class="tag">Git</li>
+                <li class="tag">Agile / Scrum</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project reveal" style="--i: 3">
             <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
@@ -272,7 +307,17 @@
             </div>
           </article>
 
-          <article class="project reveal" style="--i: 3">
+          <article class="project has-media reveal" style="--i: 4">
+            <!-- The diagram is the content, so it opens full size rather than
+                 being cropped to fit — it is unreadable at card width. -->
+            <a class="project-media is-diagram" href="assets/file-system-diagram.png"
+               target="_blank" rel="noopener noreferrer">
+              <img src="assets/file-system-diagram.png" width="1536" height="1024"
+                   loading="lazy" decoding="async"
+                   alt="Architecture diagram of a Unix-like file system for ThreadOS. User threads issue create, open, read, write, seek, close and delete calls through a file system interface into a core that handles path lookup, permissions, file table and disk space management, and multithreaded consistency, then reads and writes fixed-size blocks on a simulated disk. On-disk metadata comprises a superblock, inode table, root directory, free block list and system-wide file table, alongside a per-thread file descriptor table in memory." />
+              <span class="media-zoom">View full size</span>
+            </a>
+
             <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
@@ -295,36 +340,6 @@
               <li class="tag">GCP</li>
               <li class="tag">Multithreading</li>
               <li class="tag">JUnit</li>
-            </ul>
-            </div>
-          </article>
-
-          <!-- Photo pending: add a .project-media block and the has-media
-               class once a gameplay capture is available. -->
-          <article class="project reveal" style="--i: 4">
-            <div class="project-body">
-            <div class="card-top">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="7" width="20" height="11" rx="4" />
-                  <path d="M7 11v3M5.5 12.5h3" />
-                  <circle cx="16" cy="12" r="1" />
-                  <circle cx="18.5" cy="14.5" r="1" />
-                </svg>
-              </span>
-              <span class="badge">Team Project</span>
-            </div>
-            <h3 class="card-title">Key to Escape</h3>
-            <p class="card-desc">
-              A Unity game built by a four-person Scrum team across a ten-week agile
-              cycle, version-controlled in Git through the full design–build–deploy
-              lifecycle. I built and debugged the interactive enemy character system,
-              reworking its behavior from play-tester feedback and code review.
-            </p>
-            <ul class="tag-list">
-              <li class="tag">Unity</li>
-              <li class="tag">Git</li>
-              <li class="tag">Agile / Scrum</li>
             </ul>
             </div>
           </article>
@@ -452,7 +467,7 @@
               </span>
               <span class="contact-text">
                 <span class="contact-label">LinkedIn</span>
-                <span class="contact-value">/in/adam-atienza</span>
+                <span class="contact-value">adam-atienza</span>
               </span>
             </a>
 

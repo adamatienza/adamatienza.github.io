@@ -632,6 +632,7 @@ strong {
 .project-list {
   display: grid;
   gap: 1.25rem;
+  max-width: 940px;
 }
 
 .project {
@@ -677,6 +678,40 @@ strong {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Diagrams are information, not decoration: never crop them, and give them a
+   white plate to sit on so the drawing keeps its own contrast. */
+.project-media.is-diagram {
+  display: block;
+  background: #fff;
+  padding: 0.7rem;
+  min-height: 250px;
+}
+
+.project-media.is-diagram img {
+  object-fit: contain;
+}
+
+.media-zoom {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  z-index: 1;
+  padding: 0.26rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(var(--bg-rgb) / 0.94);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.project-media.is-diagram:hover .media-zoom {
+  color: var(--accent);
+  border-color: var(--accent-line);
 }
 
 /* A hairline inset instead of a scrim — on a light ground a dark gradient
@@ -960,8 +995,11 @@ strong {
   /* Four facts read across as a spec strip once there's width for them. */
   .fact-list { grid-template-columns: repeat(4, 1fr); }
 
-  /* Photo beside the write-up rather than stacked above it. */
-  .project.has-media { grid-template-columns: 1.05fr 1fr; }
+  /* Photo beside the write-up rather than stacked above it. The media column
+     is capped rather than proportional so photos are never displayed wider
+     than they actually are — the smart lock shot is only 429px across, and
+     upscaling it was what made it look soft. */
+  .project.has-media { grid-template-columns: minmax(0, 360px) 1fr; }
   .project-body { padding: 2rem; }
 }
 
