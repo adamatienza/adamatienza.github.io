@@ -478,41 +478,6 @@ strong {
   gap: 0.85rem;
 }
 
-.scroll-cue {
-  position: absolute;
-  left: 50%;
-  bottom: 2rem;
-  transform: translateX(-50%);
-  display: grid;
-  place-items: center;
-  width: 24px;
-  height: 44px;
-}
-
-.scroll-cue-line {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, transparent, var(--border-strong));
-  position: relative;
-  overflow: hidden;
-}
-
-.scroll-cue-line::after {
-  content: '';
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 1px;
-  height: 12px;
-  background: var(--accent);
-  animation: cue 2.2s ease-in-out infinite;
-}
-
-@keyframes cue {
-  0%   { transform: translateY(-14px); opacity: 0; }
-  40%  { opacity: 1; }
-  100% { transform: translateY(40px); opacity: 0; }
-}
-
 /* ==========================================================================
    Sections
    ========================================================================== */
@@ -680,11 +645,12 @@ strong {
   object-fit: cover;
 }
 
-/* Diagrams are information, not decoration: never crop them, and give them a
-   white plate to sit on so the drawing keeps its own contrast. */
+/* Diagrams are information, not decoration: never crop them, and let the
+   plate match the drawing's own ground (#000) so the padding reads as part
+   of the image rather than a frame around it. */
 .project-media.is-diagram {
   display: block;
-  background: #fff;
+  background: #000;
   padding: 0.7rem;
   min-height: 250px;
 }
@@ -1067,7 +1033,8 @@ strong {
 
 @media print {
   .site-header,
-  .scroll-cue,
+  .ambient,
+  .scope,
   .hero-glow { display: none; }
 
   body { background: #fff; color: #000; }
