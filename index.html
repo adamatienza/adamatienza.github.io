@@ -60,6 +60,7 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="hero">
       <div class="hero-glow" aria-hidden="true"></div>
+      <canvas class="scope" id="scope" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <p class="hero-eyebrow reveal">Available for new opportunities</p>
         <h1 class="hero-title reveal">Adam Atienza</h1>
@@ -89,24 +90,37 @@
         <div class="about-grid">
           <div class="about-body reveal">
             <p>
-              I'm a Computer Engineer with a <strong>BS in Computer Engineering</strong> from the
-              <strong>University of Washington Bothell</strong>, completed in June 2025.
+              I'm a Computer Engineering graduate from the
+              <strong>University of Washington Bothell</strong>, where I finished my
+              <strong>BS in June 2025</strong>.
             </p>
             <p>
-              My background sits at the intersection of embedded systems and software.
-              I've designed custom PCBs and written real-time firmware for vehicle control,
-              built multithreaded systems on cloud infrastructure, and wired up
-              microcontrollers to talk to the internet. I like problems where the
-              constraints are real — timing budgets, limited memory, physical hardware
-              that has to behave correctly every single time.
+              My hands-on development work is in Java, Python, and C/C++ —
+              object-oriented system design, multithreaded programming, and
+              test-driven verification. What I'm best at is debugging complex
+              real-time systems that bridge hardware and software, from embedded
+              control loops to distributed data systems.
             </p>
             <p>
-              Lately I've been exploring how AI can be applied to practical workflows,
-              which led to the recruiting assistant platform I'm currently building.
+              I've designed custom PCBs and written firmware for vehicle control,
+              built multithreaded systems on cloud infrastructure, and wired
+              microcontrollers up to the internet. Most of it in agile,
+              cross-disciplinary teams, in Git, across the full development lifecycle.
+            </p>
+            <p>
+              Lately I've been working on where AI fits into practical engineering
+              workflows — which is what led to the recruiting assistant platform, and
+              to building this site with an agentic coding setup.
             </p>
           </div>
 
           <aside class="about-facts reveal">
+            <figure class="portrait">
+              <img src="assets/adam-atienza.jpg" width="574" height="869"
+                   loading="lazy" decoding="async"
+                   alt="Adam Atienza standing at a waterfront railing on Puget Sound." />
+            </figure>
+
             <dl class="fact-list">
               <div class="fact">
                 <dt>Education</dt>
@@ -133,6 +147,48 @@
           <span class="section-index">02</span>
           <h2 class="section-title">Projects</h2>
         </header>
+
+        <!-- Featured: the capstone gets the photo and the width. -->
+        <article class="featured reveal">
+          <div class="featured-media">
+            <img src="assets/drive-by-wire.jpg" width="1280" height="720"
+                 loading="lazy" decoding="async"
+                 alt="Two recumbent electric tricycles in a UW Bothell lab. The yellow trike in the foreground carries an open control enclosure with custom PCBs, wiring harnesses and sensor connections running to the drivetrain." />
+          </div>
+
+          <div class="featured-body">
+            <div class="card-top">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="8" />
+                  <circle cx="12" cy="12" r="2.5" />
+                  <path d="M12 4v2M12 18v2M4 12h2M18 12h2" />
+                  <path d="M14.5 9.5 17 7" />
+                </svg>
+              </span>
+              <span class="badge">Capstone</span>
+            </div>
+            <h3 class="card-title">Drive-By-Wire for Electric Tricycles</h3>
+            <p class="card-desc">
+              Real-time C/C++ control of throttle, braking feedback, and automated
+              steering for two electric tricycle platforms, running on custom PCBs I
+              designed, populated, and debugged — routing power systems, wiring
+              layouts, and sensor connections built to survive physical deployment.
+            </p>
+            <p class="card-desc">
+              Most of the work was on the bench and in the field: logging test hours
+              operating the vehicles under real conditions, then tightening the
+              steering logic against what actually happened rather than what the
+              model predicted.
+            </p>
+            <ul class="tag-list">
+              <li class="tag">C / C++</li>
+              <li class="tag">Real-Time Control</li>
+              <li class="tag">PCB Design</li>
+              <li class="tag">Field Testing</li>
+            </ul>
+          </div>
+        </article>
 
         <div class="project-grid">
 
@@ -189,31 +245,6 @@
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="8" />
-                  <circle cx="12" cy="12" r="2.5" />
-                  <path d="M12 4v2M12 18v2M4 12h2M18 12h2" />
-                  <path d="M14.5 9.5 17 7" />
-                </svg>
-              </span>
-              <span class="badge">Capstone</span>
-            </div>
-            <h3 class="card-title">Drive-By-Wire for Electric Tricycles</h3>
-            <p class="card-desc">
-              Real-time control of throttle, braking, and steering for an electric
-              tricycle platform, running on a custom-designed PCB. Firmware written
-              in C/C++ against hard timing requirements for safe actuation.
-            </p>
-            <ul class="tag-list">
-              <li class="tag">C / C++</li>
-              <li class="tag">Real-Time Control</li>
-              <li class="tag">PCB Design</li>
-            </ul>
-          </article>
-
-          <article class="card reveal" style="--i: 3">
-            <div class="card-top">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="4" y="10" width="16" height="11" rx="2" />
                   <path d="M8 10V7a4 4 0 0 1 8 0v3" />
                   <circle cx="12" cy="15.5" r="1.2" />
@@ -233,6 +264,32 @@
               <li class="tag">Bluetooth</li>
               <li class="tag">IoT Cloud</li>
               <li class="tag">C++</li>
+            </ul>
+          </article>
+
+          <article class="card reveal" style="--i: 3">
+            <div class="card-top">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="11" rx="4" />
+                  <path d="M7 11v3M5.5 12.5h3" />
+                  <circle cx="16" cy="12" r="1" />
+                  <circle cx="18.5" cy="14.5" r="1" />
+                </svg>
+              </span>
+              <span class="badge">Team Project</span>
+            </div>
+            <h3 class="card-title">Key to Escape</h3>
+            <p class="card-desc">
+              A Unity game built by a four-person Scrum team across a ten-week agile
+              cycle, version-controlled in Git through the full design–build–deploy
+              lifecycle. I built and debugged the interactive enemy character system,
+              reworking its behavior from play-tester feedback and code review.
+            </p>
+            <ul class="tag-list">
+              <li class="tag">Unity</li>
+              <li class="tag">Git</li>
+              <li class="tag">Agile / Scrum</li>
             </ul>
           </article>
 
@@ -262,30 +319,60 @@
           </div>
 
           <div class="skill-group reveal" style="--i: 1">
-            <h3 class="skill-heading">Cloud &amp; Platforms</h3>
+            <h3 class="skill-heading">Hardware &amp; Embedded</h3>
             <ul class="chip-list">
-              <li class="chip">Google Cloud Platform</li>
+              <li class="chip">Arduino Mega</li>
+              <li class="chip">UART</li>
+              <li class="chip">SPI</li>
+              <li class="chip">Sensor Integration</li>
+              <li class="chip">PCB Design</li>
+              <li class="chip">PCB Analysis</li>
+              <li class="chip">Schematics</li>
+              <li class="chip">Oscilloscopes</li>
+              <li class="chip">Multimeters</li>
+              <li class="chip">Bench Testing</li>
             </ul>
           </div>
 
           <div class="skill-group reveal" style="--i: 2">
-            <h3 class="skill-heading">Hardware &amp; Embedded</h3>
+            <h3 class="skill-heading">Cloud &amp; Platforms</h3>
             <ul class="chip-list">
-              <li class="chip">Arduino</li>
-              <li class="chip">Sensors</li>
-              <li class="chip">PCB Design</li>
-              <li class="chip">Oscilloscopes</li>
+              <li class="chip">Google Cloud Platform</li>
+              <li class="chip">Cloud-Based Development</li>
+              <li class="chip">IoT Data Platforms</li>
             </ul>
           </div>
 
           <div class="skill-group reveal" style="--i: 3">
-            <h3 class="skill-heading">Tools</h3>
+            <h3 class="skill-heading">Practices</h3>
             <ul class="chip-list">
+              <li class="chip">Multithreading</li>
+              <li class="chip">Object-Oriented Design</li>
+              <li class="chip">Test-Driven Verification</li>
+              <li class="chip">Agile / Scrum</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal" style="--i: 4">
+            <h3 class="skill-heading">Tools &amp; Workflow</h3>
+            <ul class="chip-list">
+              <li class="chip">Git</li>
               <li class="chip">VS Code</li>
               <li class="chip">Visual Studio</li>
               <li class="chip">Eclipse</li>
               <li class="chip">Unity</li>
               <li class="chip">LTspice</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal" style="--i: 5">
+            <h3 class="skill-heading">Web &amp; AI Tooling</h3>
+            <ul class="chip-list">
+              <li class="chip">HTML</li>
+              <li class="chip">CSS</li>
+              <li class="chip">JavaScript</li>
+              <li class="chip">Claude Code</li>
+              <li class="chip">Agentic Coding</li>
             </ul>
           </div>
 

@@ -38,6 +38,9 @@ desktop width and a narrow mobile width.
 | `style.css` | Design tokens, layout, responsive rules |
 | `script.js` | Mobile nav, header state, scrollspy, reveal-on-scroll |
 | `assets/Adam-Atienza-Resume.pdf` | Linked from Contact; replace in place, keep the filename |
+| `assets/drive-by-wire.jpg` | Capstone hardware photo, used by the featured project |
+| `assets/adam-atienza.jpg` | Portrait in the About sidebar |
+| `assets/og-preview.png` | 1200×630 social card |
 
 Keep it to these three source files. The owner asked for exactly this structure
 for simplicity — resist splitting into partials or modules.
@@ -86,7 +89,17 @@ children compute `transition-delay: calc(var(--i, 0) * 0.08s)`. A new card needs
 `style="--i: N"` on it; without one it defaults to 0 and reveals immediately.
 
 **Adding a project card** means: `--i` for the stagger, plus `reveal` for the
-entrance animation. Both are inline on the existing four — copy one.
+entrance animation. Both are inline on the existing cards — copy one. Note the
+Projects section is a **featured article plus a four-card grid**: the capstone
+sits above the grid at full width with its photo. Five cards in the plain grid
+would leave a hole in the 2×2, which is why it's built this way.
+
+**The hero oscilloscope** (`#scope`, drawn in `script.js`) is decorative: the
+canvas is `aria-hidden`, `pointer-events: none`, and carries no information. It
+cycles three signal shapes — sine, ~30% duty PWM, serial packet burst — with a
+swept beam. It stops its rAF loop when scrolled out of view or the tab is
+hidden, and under `prefers-reduced-motion` it paints a single static frame
+instead of animating. Keep all three of those behaviors if you touch it.
 
 ## Content rules
 
@@ -107,8 +120,13 @@ the owner uses both, for different work. The resume currently lists only Visual
 Studio; closing that gap is the owner's call. Don't "fix" the site by dropping
 one to match.
 
-Prose in the hero intro and the third About paragraph was drafted by Claude, not
-the owner, and may be rewritten in his voice at any time.
+The About section is now built from the owner's own resume summary — treat that
+wording as his, not filler. The **hero intro line** is still Claude's draft and
+may be rewritten at any time.
+
+Skills beyond the resume: "HTML / CSS / JavaScript / Claude Code / Agentic
+Coding" were added by the owner's explicit request, from building this site.
+Everything else in Skills traces to the resume.
 
 **The hero badge reads "Available for new opportunities."** It is accurate as of
 August 2026. It becomes actively misleading the moment that changes, so check it

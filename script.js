@@ -197,6 +197,193 @@
   }
 
   /* ----------------------------------------------------------------------
+     Hero oscilloscope
+
+     Draws a swept scope trace that cycles through three signal shapes:
+     a clean sine, a ~30% duty PWM square, and a burst of serial packets —
+     the three things you'd actually see on a bench probing this work.
+     Decorative only; the markup is aria-hidden.
+     ---------------------------------------------------------------------- */
+  var scope = document.getElementById('scope');
+
+  if (scope && scope.getContext) {
+    var ctx = scope.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var cssW = 0;
+    var cssH = 0;
+
+    function sizeScope() {
+      var rect = scope.getBoundingClientRect();
+      cssW = rect.width;
+      cssH = rect.height;
+      scope.width = Math.max(1, Math.round(cssW * dpr));
+      scope.height = Math.max(1, Math.round(cssH * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // Signal shapes. x is 0..1 across the trace, t advances with time.
+    function sine(x, t) {
+      return Math.sin((x * 2.4 + t) * Math.PI * 2);
+    }
+
+    function pwm(x, t) {
+      var p = (x * 3.2 + t) % 1;
+      return p < 0.3 ? 0.82 : -0.82;
+    }
+
+    function packet(x, t) {
+      var p = (x * 5 + t) % 1;
+      if (p < 0.06) return 0.85;
+      if (p < 0.13) return -0.85;
+      if (p < 0.19) return 0.85;
+      if (p < 0.34) return -0.85;
+      if (p < 0.40) return 0.85;
+      return -0.25;
+    }
+
+    var shapes = [sine, pwm, packet];
+    var HOLD = 4200;   // ms showing one shape
+    var MORPH = 900;   // ms crossfading into the next
+
+    function sampleAt(x, t, now) {
+      var cycle = HOLD + MORPH;
+      var idx = Math.floor(now / cycle) % shapes.length;
+      var into = now % cycle;
+      var current = shapes[idx];
+      if (into <= HOLD) return current(x, t);
+
+      var next = shapes[(idx + 1) % shapes.length];
+      var k = (into - HOLD) / MORPH;
+      k = k * k * (3 - 2 * k); // smoothstep
+      return current(x, t) * (1 - k) + next(x, t) * k;
+    }
+
+    function drawGrid() {
+      var step = 44;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(94, 234, 212, 0.055)';
+      ctx.beginPath();
+      for (var x = step; x < cssW; x += step) {
+        ctx.moveTo(Math.round(x) + 0.5, 0);
+        ctx.lineTo(Math.round(x) + 0.5, cssH);
+      }
+      for (var y = step; y < cssH; y += step) {
+        ctx.moveTo(0, Math.round(y) + 0.5);
+        ctx.lineTo(cssW, Math.round(y) + 0.5);
+      }
+      ctx.stroke();
+
+      // Centre line, a touch brighter — the zero volt reference.
+      ctx.strokeStyle = 'rgba(94, 234, 212, 0.13)';
+      ctx.beginPath();
+      ctx.moveTo(0, Math.round(cssH / 2) + 0.5);
+      ctx.lineTo(cssW, Math.round(cssH / 2) + 0.5);
+      ctx.stroke();
+    }
+
+    function drawFrame(now) {
+      if (!cssW || !cssH) return;
+
+      var t = now / 5200;
+      var mid = cssH / 2;
+      var amp = Math.min(cssH * 0.3, 74);
+      var step = 2;
+
+      ctx.clearRect(0, 0, cssW, cssH);
+      drawGrid();
+
+      // The persistent trace.
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = 'rgba(94, 234, 212, 0.42)';
+      ctx.beginPath();
+      for (var x = 0; x <= cssW; x += step) {
+        var y = mid - sampleAt(x / cssW, t, now) * amp;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Sweeping beam: a brighter, glowing segment that runs left to right.
+      var headX = (now / 2600 % 1) * cssW;
+      var tail = Math.min(190, cssW * 0.3);
+      var from = Math.max(0, headX - tail);
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(94, 234, 212, 0.85)';
+      ctx.shadowBlur = 12;
+      ctx.strokeStyle = 'rgba(160, 255, 238, 0.95)';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      for (var bx = from; bx <= headX; bx += step) {
+        var by = mid - sampleAt(bx / cssW, t, now) * amp;
+        if (bx === from) ctx.moveTo(bx, by);
+        else ctx.lineTo(bx, by);
+      }
+      ctx.stroke();
+
+      // Beam head.
+      var hy = mid - sampleAt(headX / cssW, t, now) * amp;
+      ctx.fillStyle = '#d6fff5';
+      ctx.beginPath();
+      ctx.arc(headX, hy, 2.6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    var rafId = null;
+    var running = false;
+
+    function loop(now) {
+      drawFrame(now);
+      rafId = window.requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running || prefersReducedMotion) return;
+      running = true;
+      rafId = window.requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      running = false;
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    sizeScope();
+
+    if (prefersReducedMotion) {
+      // One still frame: the shape is the point, the motion isn't.
+      drawFrame(0);
+    } else {
+      // Don't burn frames on a hero nobody is looking at.
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          entries[0].isIntersecting ? start() : stop();
+        }, { threshold: 0 }).observe(scope);
+      } else {
+        start();
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        document.hidden ? stop() : start();
+      });
+    }
+
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        sizeScope();
+        if (prefersReducedMotion) drawFrame(0);
+      }, 150);
+    });
+  }
+
+  /* ----------------------------------------------------------------------
      Smooth scroll fallback for browsers without CSS scroll-behavior
      ---------------------------------------------------------------------- */
   if (!('scrollBehavior' in document.documentElement.style)) {

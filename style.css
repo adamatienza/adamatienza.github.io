@@ -325,6 +325,22 @@ strong {
   pointer-events: none;
 }
 
+/* Oscilloscope trace occupying the dead space below the hero copy.
+   Purely decorative: aria-hidden, pointer-events none, and script.js skips
+   the animation loop entirely under prefers-reduced-motion. */
+.scope {
+  position: absolute;
+  inset: auto 0 0 0;
+  width: 100%;
+  height: 38%;
+  min-height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
 .hero-inner {
   position: relative;
   z-index: 1;
@@ -515,6 +531,63 @@ strong {
   font-size: 0.85rem;
   color: var(--text-dim);
 }
+
+/* ---------- Portrait ---------- */
+.portrait {
+  margin: 0 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+/* ---------- Featured project ---------- */
+.featured {
+  display: grid;
+  margin-bottom: 1.25rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.3s var(--ease);
+}
+
+.featured:hover { border-color: var(--border-strong); }
+
+.featured-media {
+  position: relative;
+  background: var(--bg-elev-2);
+  min-height: 200px;
+}
+
+.featured-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Settle the photo into the dark palette instead of letting it glare. */
+.featured-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 14, 20, 0.5), rgba(11, 14, 20, 0) 55%);
+  pointer-events: none;
+}
+
+.featured-body { padding: 1.6rem; }
+
+.featured-body .card-desc + .card-desc { margin-top: -0.7rem; }
 
 /* ---------- Projects ---------- */
 .project-grid {
@@ -803,6 +876,10 @@ strong {
     grid-template-columns: 1.5fr 1fr;
     gap: 3.5rem;
   }
+
+  /* Photo beside the write-up rather than stacked above it. */
+  .featured { grid-template-columns: 1.15fr 1fr; }
+  .featured-body { padding: 2rem; align-self: center; }
 }
 
 /* --- Mobile nav --- */
