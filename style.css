@@ -347,11 +347,33 @@ strong {
   max-width: 780px;
 }
 
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.9rem;
+  margin-bottom: 1.75rem;
+}
+
+.hero-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.hero-location svg {
+  width: 13px;
+  height: 13px;
+  flex: none;
+}
+
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  margin-bottom: 1.75rem;
   padding: 0.4rem 0.9rem;
   border: 1px solid var(--accent-line);
   border-radius: 999px;
@@ -494,7 +516,7 @@ strong {
 }
 
 .fact-list {
-  margin: 0;
+  margin: 2.5rem 0 0;
   display: grid;
   gap: 1px;
   background: var(--border);
@@ -534,7 +556,7 @@ strong {
 
 /* ---------- Portrait ---------- */
 .portrait {
-  margin: 0 0 1rem;
+  margin: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -545,70 +567,31 @@ strong {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center 22%;
+  object-position: center 20%;
 }
 
-/* ---------- Featured project ---------- */
-.featured {
-  display: grid;
-  margin-bottom: 1.25rem;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: border-color 0.3s var(--ease);
-}
-
-.featured:hover { border-color: var(--border-strong); }
-
-.featured-media {
-  position: relative;
-  background: var(--bg-elev-2);
-  min-height: 200px;
-}
-
-.featured-media img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Settle the photo into the dark palette instead of letting it glare. */
-.featured-media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(11, 14, 20, 0.5), rgba(11, 14, 20, 0) 55%);
-  pointer-events: none;
-}
-
-.featured-body { padding: 1.6rem; }
-
-.featured-body .card-desc + .card-desc { margin-top: -0.7rem; }
-
-/* ---------- Projects ---------- */
-.project-grid {
+/* ---------- Projects ----------
+   One vertical list. A row with a photo carries .has-media and splits into
+   two columns at desktop; a row without one stays full width, so a missing
+   photo costs nothing visually. */
+.project-list {
   display: grid;
   gap: 1.25rem;
 }
 
-.card {
+.project {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
+  display: grid;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease),
-              background-color 0.3s var(--ease);
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
 }
 
-.card::before {
+.project::before {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
@@ -616,15 +599,48 @@ strong {
   background: linear-gradient(to right, transparent, var(--accent-line), transparent);
   opacity: 0;
   transition: opacity 0.3s var(--ease);
+  z-index: 2;
 }
 
-.card:hover {
-  transform: translateY(-4px);
+.project:hover {
   border-color: var(--border-strong);
   background: var(--bg-elev-2);
 }
 
-.card:hover::before { opacity: 1; }
+.project:hover::before { opacity: 1; }
+
+.project-media {
+  position: relative;
+  background: var(--bg-elev-2);
+  min-height: 210px;
+}
+
+.project-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Settle the photo into the dark palette instead of letting it glare. */
+.project-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 14, 20, 0.5), rgba(11, 14, 20, 0) 55%);
+  pointer-events: none;
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+}
+
+.project-body .card-desc + .card-desc { margin-top: -0.7rem; }
+
+/* Full-width rows would otherwise run ~140 characters per line. */
+.project:not(.has-media) .card-desc { max-width: 78ch; }
 
 .card-top {
   display: flex;
@@ -850,7 +866,7 @@ strong {
 
 /* Stagger children within a grid. Each card carries its own --i, so adding
    items needs no new CSS — set --i on the new card and it falls into step. */
-.project-grid .reveal,
+.project-list .reveal,
 .skills-grid .reveal { transition-delay: calc(var(--i, 0) * 0.08s); }
 
 /* ==========================================================================
@@ -859,8 +875,8 @@ strong {
 @media (min-width: 640px) {
   :root { --gutter: 2rem; }
 
-  .project-grid,
-  .skills-grid {
+  .skills-grid,
+  .fact-list {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -873,13 +889,16 @@ strong {
   .section { padding: 7rem 0; }
 
   .about-grid {
-    grid-template-columns: 1.5fr 1fr;
-    gap: 3.5rem;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
   }
 
+  /* Four facts read across as a spec strip once there's width for them. */
+  .fact-list { grid-template-columns: repeat(4, 1fr); }
+
   /* Photo beside the write-up rather than stacked above it. */
-  .featured { grid-template-columns: 1.15fr 1fr; }
-  .featured-body { padding: 2rem; align-self: center; }
+  .project.has-media { grid-template-columns: 1.05fr 1fr; }
+  .project-body { padding: 2rem; }
 }
 
 /* --- Mobile nav --- */

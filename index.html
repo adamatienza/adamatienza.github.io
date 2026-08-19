@@ -62,7 +62,16 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <canvas class="scope" id="scope" aria-hidden="true"></canvas>
       <div class="container hero-inner">
-        <p class="hero-eyebrow reveal">Available for new opportunities</p>
+        <div class="hero-meta reveal">
+          <p class="hero-eyebrow">Available for new opportunities</p>
+          <p class="hero-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            Bellevue, WA
+          </p>
+        </div>
         <h1 class="hero-title reveal">Adam Atienza</h1>
         <p class="hero-subtitle reveal">Computer Engineer</p>
         <p class="hero-intro reveal">
@@ -91,8 +100,8 @@
           <div class="about-body reveal">
             <p>
               I'm a Computer Engineering graduate from the
-              <strong>University of Washington Bothell</strong>, where I finished my
-              <strong>BS in June 2025</strong>.
+              <strong>University of Washington</strong>, where I completed my
+              <strong>Bachelor of Science in Computer Engineering</strong> in June 2025.
             </p>
             <p>
               My hands-on development work is in Java, Python, and C/C++ —
@@ -120,11 +129,19 @@
                    loading="lazy" decoding="async"
                    alt="Adam Atienza standing at a waterfront railing on Puget Sound." />
             </figure>
+          </aside>
+        </div>
 
-            <dl class="fact-list">
+        <!-- Facts run as a horizontal strip under the grid, where there's width
+             for four columns. -->
+        <dl class="fact-list reveal">
               <div class="fact">
                 <dt>Education</dt>
-                <dd>BS Computer Engineering<span class="fact-sub">UW Bothell · June 2025</span></dd>
+                <dd>Bachelor of Science, Computer Engineering<span class="fact-sub">University of Washington · June 2025</span></dd>
+              </div>
+              <div class="fact">
+                <dt>Location</dt>
+                <dd>Bellevue, WA<span class="fact-sub">Greater Seattle Area</span></dd>
               </div>
               <div class="fact">
                 <dt>Focus</dt>
@@ -134,9 +151,7 @@
                 <dt>Also</dt>
                 <dd>Software Engineering<span class="fact-sub">Backend · Cloud · AI tooling</span></dd>
               </div>
-            </dl>
-          </aside>
-        </div>
+        </dl>
       </div>
     </section>
 
@@ -148,15 +163,18 @@
           <h2 class="section-title">Projects</h2>
         </header>
 
-        <!-- Featured: the capstone gets the photo and the width. -->
-        <article class="featured reveal">
-          <div class="featured-media">
-            <img src="assets/drive-by-wire.jpg" width="1280" height="720"
-                 loading="lazy" decoding="async"
-                 alt="Two recumbent electric tricycles in a UW Bothell lab. The yellow trike in the foreground carries an open control enclosure with custom PCBs, wiring harnesses and sensor connections running to the drivetrain." />
-          </div>
+        <!-- One list. Rows carrying a photo get `has-media` and split in two
+             at desktop; rows without one run full width until a photo exists. -->
+        <div class="project-list">
 
-          <div class="featured-body">
+          <article class="project has-media reveal" style="--i: 0">
+            <div class="project-media">
+              <img src="assets/drive-by-wire.jpg" width="1280" height="720"
+                   loading="lazy" decoding="async"
+                   alt="Two recumbent electric tricycles in a University of Washington lab. The yellow trike in the foreground carries an open control enclosure with custom PCBs, wiring harnesses and sensor connections running to the drivetrain." />
+            </div>
+
+          <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -187,12 +205,45 @@
               <li class="tag">PCB Design</li>
               <li class="tag">Field Testing</li>
             </ul>
-          </div>
-        </article>
+            </div>
+          </article>
 
-        <div class="project-grid">
+          <article class="project has-media reveal" style="--i: 1">
+            <div class="project-media">
+              <img src="assets/smart-lock.png" width="429" height="319"
+                   loading="lazy" decoding="async"
+                   alt="Smart lock prototype on a lab bench: an Arduino, two breadboards, a numeric keypad and an LCD wired to a latch mounted on a wooden panel." />
+            </div>
 
-          <article class="card reveal" style="--i: 0">
+            <div class="project-body">
+              <div class="card-top">
+                <span class="card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="10" width="16" height="11" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                    <circle cx="12" cy="15.5" r="1.2" />
+                    <path d="M12 16.7v1.8" />
+                  </svg>
+                </span>
+                <span class="badge">Embedded</span>
+              </div>
+              <h3 class="card-title">Embedded IoT Smart Lock System</h3>
+              <p class="card-desc">
+                A dual-microcontroller smart lock pairing an Arduino Mega and Uno over
+                Bluetooth, with cloud connectivity for remote status and control from a
+                mobile dashboard.
+              </p>
+              <ul class="tag-list">
+                <li class="tag">Arduino</li>
+                <li class="tag">Bluetooth</li>
+                <li class="tag">IoT Cloud</li>
+                <li class="tag">C++</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="project reveal" style="--i: 2">
+            <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -214,9 +265,11 @@
               <li class="tag">AI / LLM</li>
               <li class="tag">Data Processing</li>
             </ul>
+            </div>
           </article>
 
-          <article class="card reveal" style="--i: 1">
+          <article class="project reveal" style="--i: 3">
+            <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -239,35 +292,13 @@
               <li class="tag">Multithreading</li>
               <li class="tag">JUnit</li>
             </ul>
-          </article>
-
-          <article class="card reveal" style="--i: 2">
-            <div class="card-top">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="4" y="10" width="16" height="11" rx="2" />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                  <circle cx="12" cy="15.5" r="1.2" />
-                  <path d="M12 16.7v1.8" />
-                </svg>
-              </span>
-              <span class="badge">Embedded</span>
             </div>
-            <h3 class="card-title">Embedded IoT Smart Lock System</h3>
-            <p class="card-desc">
-              A dual-microcontroller smart lock pairing an Arduino Mega and Uno over
-              Bluetooth, with cloud connectivity for remote status and control from a
-              mobile dashboard.
-            </p>
-            <ul class="tag-list">
-              <li class="tag">Arduino</li>
-              <li class="tag">Bluetooth</li>
-              <li class="tag">IoT Cloud</li>
-              <li class="tag">C++</li>
-            </ul>
           </article>
 
-          <article class="card reveal" style="--i: 3">
+          <!-- Photo pending: add a .project-media block and the has-media
+               class once a gameplay capture is available. -->
+          <article class="project reveal" style="--i: 4">
+            <div class="project-body">
             <div class="card-top">
               <span class="card-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -291,6 +322,7 @@
               <li class="tag">Git</li>
               <li class="tag">Agile / Scrum</li>
             </ul>
+            </div>
           </article>
 
         </div>
@@ -443,7 +475,7 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p class="footer-copy">© <span id="year">2025</span> Adam Atienza</p>
-      <p class="footer-note">Built with plain HTML, CSS, and JavaScript.</p>
+      <p class="footer-note">Built with Claude Code — plain HTML, CSS, and JavaScript.</p>
     </div>
   </footer>
 
