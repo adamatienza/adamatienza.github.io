@@ -738,6 +738,63 @@ strong {
   color: var(--accent);
 }
 
+/* Date sits beside the badge rather than under the title, so the top row
+   carries all the card's metadata. */
+.card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.card-date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* Project links live at the foot of the card as real buttons, not as badges.
+   A badge sits beside the date and icon and can't grow without crowding
+   them; down here it can be a proper hit target. The mark names the
+   destination so a click is never a guess. */
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.62rem 1.15rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+              background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.project-link svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
 .card-title {
   font-size: 1.15rem;
   margin-bottom: 0.6rem;

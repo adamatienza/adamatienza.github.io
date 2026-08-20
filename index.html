@@ -168,7 +168,36 @@
              at desktop; rows without one run full width until a photo exists. -->
         <div class="project-list">
 
-          <article class="project has-media reveal" style="--i: 0">
+          <article class="project reveal" style="--i: 0">
+            <div class="project-body">
+            <div class="card-top">
+              <span class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="7" width="16" height="12" rx="2" />
+                  <path d="M12 7V4" /><circle cx="12" cy="3" r="1" />
+                  <path d="M9 12h.01M15 12h.01M9.5 16h5" />
+                </svg>
+              </span>
+              <div class="card-meta">
+                <span class="card-date">July 2026</span>
+                <span class="badge badge-active">In Progress</span>
+              </div>
+            </div>
+            <h3 class="card-title">AI Recruiting Assistant Platform</h3>
+            <p class="card-desc">
+              A personal project that processes structured recruiting data to power
+              AI-assisted candidate evaluation — normalizing messy inputs into a
+              consistent shape a model can reason over reliably.
+            </p>
+            <ul class="tag-list">
+              <li class="tag">Python</li>
+              <li class="tag">AI / LLM</li>
+              <li class="tag">Data Processing</li>
+            </ul>
+            </div>
+          </article>
+
+          <article class="project has-media reveal" style="--i: 1">
             <div class="project-media">
               <img src="assets/drive-by-wire.jpg" width="1280" height="720"
                    loading="lazy" decoding="async"
@@ -185,7 +214,10 @@
                   <path d="M14.5 9.5 17 7" />
                 </svg>
               </span>
-              <span class="badge">Capstone</span>
+              <div class="card-meta">
+                <span class="card-date">June 2025</span>
+                <span class="badge">Capstone</span>
+              </div>
             </div>
             <h3 class="card-title">Drive-By-Wire for Electric Tricycles</h3>
             <p class="card-desc">
@@ -206,10 +238,19 @@
               <li class="tag">PCB Design</li>
               <li class="tag">Field Testing</li>
             </ul>
+            <div class="card-actions">
+              <a class="project-link" href="https://github.com/adamatienza/Drive-by-wire"
+                 target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+                </svg>
+                View code
+              </a>
+            </div>
             </div>
           </article>
 
-          <article class="project has-media reveal" style="--i: 1">
+          <article class="project has-media reveal" style="--i: 2">
             <div class="project-media">
               <img src="assets/smart-lock.png" width="429" height="319"
                    loading="lazy" decoding="async"
@@ -226,7 +267,10 @@
                     <path d="M12 16.7v1.8" />
                   </svg>
                 </span>
-                <span class="badge">Embedded</span>
+                <div class="card-meta">
+                  <span class="card-date">March 2025</span>
+                  <span class="badge">Embedded</span>
+                </div>
               </div>
               <h3 class="card-title">Embedded IoT Smart Lock System</h3>
               <p class="card-desc">
@@ -240,10 +284,19 @@
                 <li class="tag">IoT Cloud</li>
                 <li class="tag">C++</li>
               </ul>
+              <div class="card-actions">
+                <a class="project-link" href="https://github.com/adamatienza/embedded-iot-smart-lock"
+                   target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+                  </svg>
+                  View code
+                </a>
+              </div>
             </div>
           </article>
 
-          <article class="project has-media reveal" style="--i: 2">
+          <article class="project has-media reveal" style="--i: 3">
             <div class="project-media">
               <img src="assets/key-to-escape.png" width="1710" height="1005"
                    loading="lazy" decoding="async"
@@ -260,7 +313,10 @@
                     <circle cx="18.5" cy="14.5" r="1" />
                   </svg>
                 </span>
-                <span class="badge">Team Project</span>
+                <div class="card-meta">
+                  <span class="card-date">January 2025</span>
+                  <span class="badge">Team Project</span>
+                </div>
               </div>
               <h3 class="card-title">Key to Escape</h3>
               <p class="card-desc">
@@ -275,32 +331,17 @@
                 <li class="tag">Git</li>
                 <li class="tag">Agile / Scrum</li>
               </ul>
-            </div>
-          </article>
-
-          <article class="project reveal" style="--i: 3">
-            <div class="project-body">
-            <div class="card-top">
-              <span class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="4" y="7" width="16" height="12" rx="2" />
-                  <path d="M12 7V4" /><circle cx="12" cy="3" r="1" />
-                  <path d="M9 12h.01M15 12h.01M9.5 16h5" />
-                </svg>
-              </span>
-              <span class="badge badge-active">In Progress</span>
-            </div>
-            <h3 class="card-title">AI Recruiting Assistant Platform</h3>
-            <p class="card-desc">
-              A personal project that processes structured recruiting data to power
-              AI-assisted candidate evaluation — normalizing messy inputs into a
-              consistent shape a model can reason over reliably.
-            </p>
-            <ul class="tag-list">
-              <li class="tag">Python</li>
-              <li class="tag">AI / LLM</li>
-              <li class="tag">Data Processing</li>
-            </ul>
+              <div class="card-actions">
+                <a class="project-link" href="https://ayush434.github.io/Key-To-Escape-HorrorGame/#trailer"
+                   target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 4h6v6" />
+                    <path d="M20 4 11 13" />
+                    <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                  </svg>
+                  Trailer &amp; report
+                </a>
+              </div>
             </div>
           </article>
 
@@ -324,7 +365,10 @@
                   <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6" />
                 </svg>
               </span>
-              <span class="badge">Coursework</span>
+              <div class="card-meta">
+                <span class="card-date">December 2024</span>
+                <span class="badge">Coursework</span>
+              </div>
             </div>
             <h3 class="card-title">File System Simulation</h3>
             <p class="card-desc">
