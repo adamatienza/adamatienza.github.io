@@ -1,0 +1,19 @@
+# Adam Atienza — portfolio
+#
+# The site itself is fine to index. The resume is not: it carries a phone
+# number, and an indexed PDF surfaces on a search for the name and lingers in
+# cache long after any later edit. It stays reachable by link from the page.
+#
+# Only the PDF is disallowed, not all of /assets/ — a blanket rule there would
+# also hide og-preview.png, and some social scrapers honour robots.txt when
+# fetching a preview image, which would break link cards.
+#
+# Note this is a request, not enforcement. Well-behaved crawlers respect it;
+# scrapers that ignore it exist. Treat it as keeping the resume out of search
+# results, not as making it private.
+
+User-agent: *
+Allow: /
+Disallow: /assets/Adam-Atienza-Resume.pdf
+
+Sitemap: https://adamatienza.github.io/sitemap.xml

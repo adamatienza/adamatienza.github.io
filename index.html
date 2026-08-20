@@ -4,20 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adam Atienza — Computer Engineer</title>
-  <meta name="description" content="Adam Atienza — Computer Engineer specializing in embedded systems and software. BS Computer Engineering, University of Washington Bothell." />
+  <meta name="description" content="Adam Atienza — Computer Engineer specializing in embedded systems and software. Bachelor of Science in Computer Engineering, University of Washington." />
   <meta name="theme-color" content="#f6efe4" />
+  <link rel="canonical" href="https://adamatienza.github.io/" />
 
-  <!-- Inline SVG favicon: no extra file, no extra request. -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0e14'/%3E%3Crect x='.5' y='.5' width='31' height='31' rx='6.5' fill='none' stroke='%235eead4' stroke-opacity='.35'/%3E%3Ctext x='16' y='21.5' font-family='ui-monospace,Menlo,Consolas,monospace' font-size='13' font-weight='600' fill='%235eead4' text-anchor='middle'%3EAA%3C/text%3E%3C/svg%3E" />
+  <!-- Inline SVG favicon: no extra file, no extra request. A solid accent tile
+       rather than the page's cream, so the mark stays legible against both a
+       light and a dark browser tab strip. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d6962'/%3E%3Ctext x='16' y='21.5' font-family='ui-monospace,Menlo,Consolas,monospace' font-size='13' font-weight='600' fill='%23f6efe4' text-anchor='middle'%3EAA%3C/text%3E%3C/svg%3E" />
 
-  <!-- Open Graph / social preview.
-       og:url and og:image MUST be absolute URLs — relative paths are ignored by
-       every scraper. Replace the placeholder host below when the site is deployed. -->
+  <!-- Open Graph / social preview. og:url and og:image must stay absolute —
+       scrapers fetch them out of context and ignore relative paths. -->
   <meta property="og:title" content="Adam Atienza — Computer Engineer" />
-  <meta property="og:description" content="Embedded systems and software engineer. BS Computer Engineering, UW Bothell." />
+  <meta property="og:description" content="Embedded systems and software engineer. Bachelor of Science in Computer Engineering, University of Washington." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/" />
-  <meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/assets/og-preview.png" />
+  <meta property="og:url" content="https://adamatienza.github.io/" />
+  <meta property="og:image" content="https://adamatienza.github.io/assets/og-preview.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Adam Atienza — Computer Engineer" />
@@ -350,7 +352,7 @@
                  being cropped to fit — it is unreadable at card width. -->
             <a class="project-media is-diagram" href="assets/file-system-diagram.png"
                target="_blank" rel="noopener noreferrer">
-              <img src="assets/file-system-diagram.png" width="1536" height="1024"
+              <img src="assets/file-system-diagram.png" width="1400" height="933"
                    loading="lazy" decoding="async"
                    alt="Architecture diagram of a Unix-like file system for ThreadOS. User threads issue create, open, read, write, seek, close and delete calls through a file system interface into a core that handles path lookup, permissions, file table and disk space management, and multithreaded consistency, then reads and writes fixed-size blocks on a simulated disk. On-disk metadata comprises a superblock, inode table, root directory, free block list and system-wide file table, alongside a per-thread file descriptor table in memory." />
               <span class="media-zoom">View full size</span>
