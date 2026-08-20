@@ -40,7 +40,7 @@ desktop width and a narrow mobile width.
 | `assets/Adam-Atienza-Resume.pdf` | Linked from Contact; replace in place, keep the filename |
 | `assets/drive-by-wire.jpg` | Capstone hardware photo, used by the featured project |
 | `assets/adam-atienza.jpg` | Portrait in the About sidebar |
-| `assets/og-preview-v2.png` | 1200×630 social card; suffix is bumped on change, see Deploying |
+| `assets/og-card.png` | 1200×630 social card; renamed on change, see Deploying |
 
 Keep it to these three source files. The owner asked for exactly this structure
 for simplicity — resist splitting into partials or modules.
@@ -142,10 +142,10 @@ The site is live at `https://adamatienza.github.io/`, served by GitHub Pages fro
 `main` at the repo root. There is no build step: pushing to `main` *is* the
 deploy, and Pages rebuilds within a minute or two.
 
-**Bump the social card's filename whenever its contents change.** It is
-`assets/og-preview-v2.png` rather than `og-preview.png` for a reason: LinkedIn,
-Facebook and Slack cache the preview image against its URL, so replacing the
-bytes at the same path leaves them serving the old card indefinitely — re-running
-LinkedIn's Post Inspector refreshes the *page* metadata but not the image. A new
-filename is the only reliable way to force a refetch. Update the `og:image` tag
-to match.
+**Rename the social card whenever its contents change**, to a filename no
+platform has fetched before. LinkedIn, Facebook and Slack cache the preview
+image against its URL, so replacing the bytes at an existing path leaves them
+serving the old card indefinitely — re-running LinkedIn's Post Inspector
+refreshes the *page* metadata but not the image. Note this rules out reusing a
+previously-published name such as `og-preview.png`, which already has a stale
+copy cached against it. Update the `og:image` tag to match.
